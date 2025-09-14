@@ -19,8 +19,26 @@ public class UserDto {
     @NotBlank
     @Pattern(regexp="\\d{4}|\\d{10}")
     private String id;
+    
+    @NotBlank
+    private String course;
+    
+    @NotBlank
+    private String department;
 
-    // getters and setters
+    public String getCourse() {
+		return course;
+	}
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	// getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
