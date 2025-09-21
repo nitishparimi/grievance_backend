@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,7 @@ public class MainController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<Object>> loginuser(@RequestBody UserDto u) {
+    	System.out.println(u.getId());
         String s = userserv.UserLogin(u);
         if (s.equals("Success")) {
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(u.getId());
@@ -99,7 +101,7 @@ public class MainController {
             String htmlForm = "<html>"
                     + "<body>"
                     + "<h3>Enter New Password</h3>"
-                    + "<form action=\"" + change_password + u.getId() + "\" method=\"POST\">"
+                    + "<form action=\"" + change_password + u.getBusinessId() + "\" method=\"POST\">"
                     + "New Password: <input type=\"password\" name=\"password\" />"
                     + "<button type=\"submit\">Change Password</button>"
                     + "</form>"
@@ -127,7 +129,7 @@ public class MainController {
     
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Object>> logout(@RequestParam("id") String id) {
-        boolean b = userserv.findById(id);
+        boolean b = userserv.settingActiveSession(id);
         if (!b) {
             return ResponseEntity.badRequest().body(new ApiResponse<>("error", "User not found", null));
         }

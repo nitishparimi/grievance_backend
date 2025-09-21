@@ -12,7 +12,9 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserEntity, Long>{
 
 	UserEntity findByMail(String mail);
-	UserEntity findById(String id);
+	UserEntity findByBusinessId(String id);
 	UserEntity findByVerificationToken(String verificationToken);
 	UserEntity findByResetToken(String resetToken);
+
+	List<UserEntity> findByRoleAndDepartment(String role, String department);
 }

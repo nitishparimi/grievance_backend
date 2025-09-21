@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entities.UserEntity;
+import com.example.demo.Entities.GrievanceEntity;
 
 
 @Service
@@ -45,7 +46,7 @@ public class EmailService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	    String subject = "Please reset your password";
 	    String verificationUrl = reset_token + user.getResetToken();
-	    String message = "Click the link to reset your Password for the account " + user.getId() 
+	    String message = "Click the link to reset your Password for the account " + user.getBusinessId() 
 	    				+ ": " + verificationUrl + 
 	    				"\n This link will be expired within 10 Min i.e " + 
 	    				user.getResetTokenGeneratedAt().plusMinutes(10).format(formatter);
@@ -56,6 +57,41 @@ public class EmailService {
 	    email.setText(message);
 
 	    mailSender.send(email);
+	}
+
+	public void sendGrievanceSubmissionEmail(UserEntity submitter, GrievanceEntity grievance) {
+		String subject = "Grievance Submitted";
+		String message = "Dear " + submitter.getName() + ",\n\n" +
+				"Your grievance has been submitted successfully." +
+				"\nDepartment: " + grievance.getDepartment() +
+				"\nIssue: " + grievance.getIssue() +
+				"\nStatus: " + grievance.getStatus() +
+				"\n\nWe will keep you updated.";
+
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo(submitter.getMail());
+		email.setSubject(subject);
+		email.setText(message);
+
+		mailSender.send(email);
+	}
+
+	public void sendGrievanceStatusUpdateEmail(UserEntity submitter, GrievanceEntity grievance) {
+		String subject = "Grievance Status Updated";
+		String message = "Dear " + submitter.getName() + ",\n\n" +
+				"Your grievance status has been updated." +
+				"\nDepartment: " + grievance.getDepartment() +
+				"\nIssue: " + grievance.getIssue() +
+				"\nCurrent Status: " + grievance.getStatus() +
+				(grievance.getResult() != null ? "\nResult: " + grievance.getResult() : "") +
+				"\n\nThank you.";
+
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo(submitter.getMail());
+		email.setSubject(subject);
+		email.setText(message);
+
+		mailSender.send(email);
 	}
 
 }

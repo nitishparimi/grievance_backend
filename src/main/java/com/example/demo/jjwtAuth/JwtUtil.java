@@ -26,10 +26,10 @@ public class JwtUtil {
     
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())  // Assuming username holds the ID
+                .setSubject(userDetails.getUsername()) 
                 .claim("role", userDetails.getAuthorities().iterator().next().getAuthority())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10 hours validity
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

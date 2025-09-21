@@ -67,8 +67,17 @@ public class UserEntity {
 		private String password;
 		
 		@Column(unique = true, nullable = false)
-		private String id;
+		private String businessId;
 		
+		public String getBusinessId() {
+			return businessId;
+		}
+
+		public void setBusinessId(String businessId) {
+			this.businessId = businessId;
+			assignRole();
+		}
+
 		private String role;
 		
 		private String course;
@@ -162,10 +171,10 @@ public class UserEntity {
 		}
 
 		private void assignRole() {
-	        if (id != null) {
-	            if (id.matches("\\d{10}")) {     // exactly 10 digits
+	        if (businessId != null) {
+	            if (businessId.matches("\\d{10}")) {     // exactly 10 digits
 	                this.role = "STUDENT";
-	            } else if (id.matches("\\d{4}")) {  // exactly 4 digits
+	            } else if (businessId.matches("\\d{4}")) {  // exactly 4 digits
 	                this.role = "STAFF";
 	            } else {
 	                this.role = "UNKNOWN"; // Or throw exception if invalid
@@ -174,14 +183,7 @@ public class UserEntity {
 		
 		}
 
-		public void setId(String id) {
-			this.id = id;
-			assignRole();
-		}
-
-		public String getId() {
-			return id;
-		}
+		
 		
 }
 

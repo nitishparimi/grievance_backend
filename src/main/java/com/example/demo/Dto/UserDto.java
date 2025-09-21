@@ -38,7 +38,6 @@ public class UserDto {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	// getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

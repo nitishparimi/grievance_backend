@@ -42,6 +42,7 @@ public class SecurityConfig {
         .requestMatchers("/users/greeter", "/users/logout", "/users/login", "/users/register", "/users/verifyuser", "/users/verificationresend", "/users/sendResetToken", "/users/verifyResetToken", "/users/password-change").permitAll()
         .requestMatchers("/admin/**").hasRole("STAFF")
         .requestMatchers("/student/**").hasRole("STUDENT")
+		.requestMatchers("/grievances/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -29,7 +29,7 @@ public class UserService {
         
         user.setName(dto.getName());
         user.setMail(dto.getMail());
-        user.setId(dto.getId());
+        user.setBusinessId(dto.getId());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setVerified(false);
         user.setCourse(dto.getCourse());
@@ -44,7 +44,7 @@ public class UserService {
     }
     
 	public String UserLogin(UserDto u) {
-    	UserEntity us = userRepo.findById(u.getId());
+    	UserEntity us = userRepo.findByBusinessId(u.getId());
     	
     	if(us == null) return "No user Found";
     	if(us.isActiveSession()) return "Already LoggedIn";
@@ -90,14 +90,15 @@ public class UserService {
 	}
 	
 	public String generateResetToken(String id) {
-		UserEntity u = userRepo.findById(id);
-		if(u == null) return "No User Found for this Id/ Check the Id you Mentioned";
-		u.setResetToken(UUID.randomUUID().toString());
-        u.setResetTokenGeneratedAt(LocalDateTime.now());
-        userRepo.save(u);
-		emailservice.sendResetTokenEmail(u);
-		return "Sent";
+	    UserEntity u = userRepo.findByBusinessId(id);
+	    if (u == null) return "No User Found for this Id/ Check the Id you Mentioned";
+	    u.setResetToken(UUID.randomUUID().toString());
+	    u.setResetTokenGeneratedAt(LocalDateTime.now());
+	    userRepo.save(u);
+	    emailservice.sendResetTokenEmail(u);
+	    return "Sent";
 	}
+
 	
 	public UserEntity verifyResetToken(String token) {
 		UserEntity u = userRepo.findByResetToken(token);
@@ -112,7 +113,7 @@ public class UserService {
 	}
 	
 	public UserEntity changePass(String id, String newpassword) {
-		UserEntity u = userRepo.findById(id);
+		UserEntity u = userRepo.findByBusinessId(id);
 		u.setPassword(passwordEncoder.encode(newpassword));
 		u.setResetToken(null);
 		u.setResetTokenGeneratedAt(null);
@@ -120,9 +121,8 @@ public class UserService {
 		return u;
 	}
 
-	public boolean findById(String id) {
-		// TODO Auto-generated method stub
-		UserEntity u = userRepo.findById(id);
+	public boolean settingActiveSession(String id) {
+		UserEntity u = userRepo.findByBusinessId(id);
 		if(u != null && u.isActiveSession()) {
 			u.setActiveSession(false);
 	        userRepo.save(u);
@@ -131,5 +131,8 @@ public class UserService {
 		return false;
 	}
 
+	public UserEntity findByuserId(String id) {
+		return userRepo.findByBusinessId(id);
+	}
 
 }

@@ -29,7 +29,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getId();  // Important: We use ID as the principal
+        return user.getBusinessId();  // Important: We use ID as the principal
     }
 
     @Override
