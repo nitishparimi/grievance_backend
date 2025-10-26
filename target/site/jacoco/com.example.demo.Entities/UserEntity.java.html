@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">grievance_backend</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.Entities</a> &gt; <span class="el_source">UserEntity.java</span></div><h1>UserEntity.java</h1><pre class="source lang-java linenums">package com.example.demo.Entities;
+
+
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name = &quot;users&quot;)
+<span class="fc" id="L16">public class UserEntity {</span>
+		
+		public Long getS_no() {
+<span class="nc" id="L19">			return s_no;</span>
+		}
+
+		public void setS_no(Long s_no) {
+<span class="nc" id="L23">			this.s_no = s_no;</span>
+<span class="nc" id="L24">		}</span>
+
+		public String getName() {
+<span class="nc" id="L27">			return name;</span>
+		}
+
+		public void setName(String name) {
+<span class="fc" id="L31">			this.name = name;</span>
+<span class="fc" id="L32">		}</span>
+
+		public String getMail() {
+<span class="nc" id="L35">			return mail;</span>
+		}
+
+		public void setMail(String mail) {
+<span class="fc" id="L39">			this.mail = mail;</span>
+<span class="fc" id="L40">		}</span>
+
+		public String getPassword() {
+<span class="fc" id="L43">			return password;</span>
+		}
+
+		public void setPassword(String password) {
+<span class="fc" id="L47">			this.password = password;</span>
+<span class="fc" id="L48">		}</span>
+
+		public String getRole() {
+<span class="nc" id="L51">			return role;</span>
+		}
+
+		public void setRole(String role) {
+<span class="nc" id="L55">			this.role = role;</span>
+<span class="nc" id="L56">		}</span>
+
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY) 
+		private Long s_no;
+		
+		private String name;
+		
+		@Column(unique = true, nullable = false)
+		private String mail;
+		
+		private String password;
+		
+		@Column(unique = true, nullable = false)
+		private String businessId;
+		
+		public String getBusinessId() {
+<span class="fc" id="L73">			return businessId;</span>
+		}
+
+		public void setBusinessId(String businessId) {
+<span class="fc" id="L77">			this.businessId = businessId;</span>
+<span class="fc" id="L78">			assignRole();</span>
+<span class="fc" id="L79">		}</span>
+
+		private String role;
+		
+		private String course;
+		
+		private String department;
+		
+		private String profileUrl;
+		
+<span class="fc" id="L89">		private boolean activeSession = false;</span>
+
+		public boolean isActiveSession() {
+<span class="fc" id="L92">		    return activeSession;</span>
+		}
+
+		public void setActiveSession(boolean activeSession) {
+<span class="fc" id="L96">		    this.activeSession = activeSession;</span>
+<span class="fc" id="L97">		}</span>
+
+		
+		public String getCourse() {
+<span class="nc" id="L101">			return course;</span>
+		}
+
+		public void setCourse(String course) {
+<span class="fc" id="L105">			this.course = course;</span>
+<span class="fc" id="L106">		}</span>
+
+		public String getDepartment() {
+<span class="nc" id="L109">			return department;</span>
+		}
+
+		public void setDepartment(String department) {
+<span class="fc" id="L113">			this.department = department;</span>
+<span class="fc" id="L114">		}</span>
+
+		public String getProfileUrl() {
+<span class="nc" id="L117">			return profileUrl;</span>
+		}
+
+		public void setProfileUrl(String profileUrl) {
+<span class="nc" id="L121">			this.profileUrl = profileUrl;</span>
+<span class="nc" id="L122">		}</span>
+
+		public boolean isVerified() {
+<span class="fc" id="L125">			return isVerified;</span>
+		}
+
+		public void setVerified(boolean isVerified) {
+<span class="fc" id="L129">			this.isVerified = isVerified;</span>
+<span class="fc" id="L130">		}</span>
+
+		public String getVerificationToken() {
+<span class="nc" id="L133">			return verificationToken;</span>
+		}
+
+		public void setVerificationToken(String verificationToken) {
+<span class="fc" id="L137">			this.verificationToken = verificationToken;</span>
+<span class="fc" id="L138">		}</span>
+
+		public LocalDateTime getTokenGeneratedAt() {
+<span class="fc" id="L141">			return tokenGeneratedAt;</span>
+		}
+
+		public void setTokenGeneratedAt(LocalDateTime tokenGeneratedAt) {
+<span class="fc" id="L145">			this.tokenGeneratedAt = tokenGeneratedAt;</span>
+<span class="fc" id="L146">		}</span>
+
+		private boolean isVerified;
+		
+		private String verificationToken;
+		
+		 private LocalDateTime tokenGeneratedAt;
+		
+		 private String resetToken;
+		 private LocalDateTime resetTokenGeneratedAt;
+		 
+		public String getResetToken() {
+<span class="nc" id="L158">			return resetToken;</span>
+		}
+
+		public void setResetToken(String resetToken) {
+<span class="fc" id="L162">			this.resetToken = resetToken;</span>
+<span class="fc" id="L163">		}</span>
+
+		public LocalDateTime getResetTokenGeneratedAt() {
+<span class="fc" id="L166">			return resetTokenGeneratedAt;</span>
+		}
+
+		public void setResetTokenGeneratedAt(LocalDateTime resetTokenGeneratedAt) {
+<span class="fc" id="L170">			this.resetTokenGeneratedAt = resetTokenGeneratedAt;</span>
+<span class="fc" id="L171">		}</span>
+
+		private void assignRole() {
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">	        if (businessId != null) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">	            if (businessId.matches(&quot;\\d{10}&quot;)) {     // exactly 10 digits</span>
+<span class="fc" id="L176">	                this.role = &quot;STUDENT&quot;;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">	            } else if (businessId.matches(&quot;\\d{4}&quot;)) {  // exactly 4 digits</span>
+<span class="nc" id="L178">	                this.role = &quot;STAFF&quot;;</span>
+<span class="nc" id="L179">	            } else {</span>
+<span class="fc" id="L180">	                this.role = &quot;UNKNOWN&quot;; // Or throw exception if invalid</span>
+	            }
+	        }
+		
+<span class="fc" id="L184">		}</span>
+
+		
+		
+}
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
