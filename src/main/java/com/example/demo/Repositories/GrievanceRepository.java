@@ -7,9 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.Entities.GrievanceEntity;
+import com.example.demo.Entities.UserEntity;
 
 public interface GrievanceRepository extends JpaRepository<GrievanceEntity, Long> {
 
+	
+	
+	
     // Query grievances by the submitter's businessId (returns list — a user can have many grievances)
     @Query("SELECT g FROM GrievanceEntity g WHERE g.submittedBy.businessId = :businessId")
     List<GrievanceEntity> findBySubmittedByBusinessId(@Param("businessId") String businessId);

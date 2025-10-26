@@ -14,30 +14,28 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-	
-	@Value("${Jwt.Secret-key.Key}")
-    private String secret;
 
-    
+    @Value("${Jwt.Secret-key.Key}")
+    private String secret;
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
-    
+
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername()) 
+                .setSubject(userDetails.getUsername())
                 .claim("role", userDetails.getAuthorities().iterator().next().getAuthority())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10 hrs
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-
     public Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey()) // ✅ Fix here
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -51,4 +49,3 @@ public class JwtUtil {
         return extractAllClaims(token).getExpiration().before(new Date());
     }
 }
-

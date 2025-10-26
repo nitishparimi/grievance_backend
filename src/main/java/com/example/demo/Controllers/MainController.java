@@ -65,7 +65,8 @@ public class MainController {
         }
         return ResponseEntity.badRequest().body(new ApiResponse<>("error", s, null));
     }
-
+    
+    
 
     @GetMapping("/verifyuser")
     public ResponseEntity<ApiResponse<Object>> verifyUser(@RequestParam("token") String token) {
@@ -127,15 +128,7 @@ public class MainController {
         return ResponseEntity.badRequest().body(new ApiResponse<>("error", "Invalid user ID", null));
     }
     
-    @PostMapping("/logout")
-    public ResponseEntity<ApiResponse<Object>> logout(@RequestParam("id") String id) {
-        boolean b = userserv.settingActiveSession(id);
-        if (!b) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>("error", "User not found", null));
-        }
-        
-        return ResponseEntity.ok(new ApiResponse<>("success", "Logged out successfully", null));
-    }
+    
 
 }
 

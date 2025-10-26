@@ -66,6 +66,11 @@ public class GrievanceService {
     public List<GrievanceEntity> findAllAssignedToManager(String managerUserId) {
         return grievanceRepository.findByAssignedToManagerId(managerUserId);
     }
+    
+    public List<GrievanceEntity> findGrievanceByUser(String id) {
+    	List<GrievanceEntity> list = grievanceRepository.findBySubmittedByBusinessIdOrderByIdDesc(id);
+        return list;
+    }
 
     public GrievanceEntity updateStatusAndResult(Long grievanceId, String status, String result) {
         GrievanceEntity grievance = grievanceRepository.findById(grievanceId).orElse(null);

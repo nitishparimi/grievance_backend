@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.Entities.UserEntity;
 import com.example.demo.Repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.example.demo.Dto.*;
 
 
@@ -22,7 +24,8 @@ public class UserService {
     @Autowired
     private EmailService emailservice;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserEntity save(UserDto dto) {
         UserEntity user = new UserEntity();
@@ -57,6 +60,11 @@ public class UserService {
     		
     	return "Password Invalid";
     }
+	
+	public UserEntity findUser(String id) {
+		UserEntity us = userRepo.findByBusinessId(id);
+		return us;
+	}
 	
 	
 	@Transactional
@@ -103,7 +111,6 @@ public class UserService {
 	public UserEntity verifyResetToken(String token) {
 		UserEntity u = userRepo.findByResetToken(token);
 		if(u == null || isResetTokenExpired(u)) return null;
-		
 		return u;
 		
 	}
